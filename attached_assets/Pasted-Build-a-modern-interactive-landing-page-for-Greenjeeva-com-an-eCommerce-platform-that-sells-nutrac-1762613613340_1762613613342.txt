@@ -1,0 +1,109 @@
+Build a modern, interactive landing page for Greenjeeva.com, an eCommerce platform that sells nutraceutical products.
+The goal of this page is to showcase competitor price trends for our products — both individual product price history and overall pricing insights across all products.
+
+Please design a professional, data-driven dashboard-style landing page inspired by the visual feel of Rawbids.com.
+Use clean UI, soft green tones (#3CB371) to align with Greenjeeva’s branding, and add charts, animations, and filters for an engaging user experience.
+
+🔍 Page Sections & Features
+1️⃣ Hero Section – Price Trends Overview
+
+Add a banner titled “Compare Market Prices & Track Trends”.
+
+Show a summary chart (line or area chart) showing average price trend across all products over time (e.g., weekly or monthly).
+
+Display key insights like:
+
+“Average Market Price Change (Last 4 Weeks)”
+
+“Top 5 Products with Highest Price Drop”
+
+“Top 5 Products with Highest Price Increase”
+
+2️⃣ Product-Wise Price Trend Section
+
+For each product (e.g., “Ashwagandha Extract”, “Pea Protein”, “Curcumin 95%”), show:
+
+Product image
+
+Product name, SKU, and short description
+
+A line or bar chart comparing competitor prices vs. Greenjeeva price over the past 4–8 weeks
+
+A small toggle or dropdown to switch between “Competitor A”, “Competitor B”, “Average Market Price”, etc.
+
+A hover tooltip showing exact price and date on the chart
+
+“Price Position” indicator → e.g., “You are 12% below average market price”
+
+3️⃣ Interactive Comparison Dashboard (Optional Section)
+
+Add a filter/search bar for customers to search for a product name or category (e.g., Protein, Herbal Extract, Vitamins).
+
+Show a grid view of products with:
+
+Product image
+
+Last updated price
+
+Weekly % change (colored green for drop, red for increase)
+
+Button: “View Price Trend” → scrolls down to the detailed chart for that product.
+
+4️⃣ Market Insights / Analytics Section
+
+Include:
+
+“Total Products Monitored”
+
+“Competitors Tracked”
+
+“Weekly Updates Completed”
+
+“Next Update: {next scheduled date}”
+
+A small interactive world map or region map showing price variance by region (optional advanced feature).
+
+5️⃣ Footer
+
+Add quick links to Greenjeeva.com, “About Us”, “Contact”, “Sourcing”, and “Transparency Policy”.
+
+Include the tagline: “Empowering Buyers with Transparent Market Insights.”
+
+🎨 Design Guidelines
+
+Use React + TailwindCSS (or modern UI library).
+
+Use charting libraries like Chart.js or Recharts for visualizations.
+
+Keep the layout clean, modern, and responsive (mobile-friendly).
+
+Add soft animations using Framer Motion for transitions.
+
+Follow data transparency aesthetics (like TradingView, Rawbids, or CoinMarketCap).
+
+🧩 Data Assumptions
+
+You can assume the backend provides JSON data in this format:
+
+{
+  "product_name": "Ashwagandha Extract",
+  "greenjeeva_price": [120, 118, 115, 119],
+  "competitors": {
+    "Competitor A": [130, 128, 125, 123],
+    "Competitor B": [128, 127, 124, 120]
+  },
+  "dates": ["2025-10-01", "2025-10-08", "2025-10-15", "2025-10-22"]
+}
+
+
+Use this sample structure to populate mock charts and tables.
+
+✅ Goal
+
+To build a visually rich, interactive landing page that:
+
+Shows individual product price trends compared to competitors
+
+Displays aggregate pricing trends across all products
+
+Encourages customer trust and transparency through data visualization
