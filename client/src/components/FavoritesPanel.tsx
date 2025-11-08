@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Star, TrendingDown, TrendingUp } from 'lucide-react';
-import { LineChart, Line } from 'recharts';
+import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
 interface Favorite {
   name: string;
@@ -44,38 +44,40 @@ export default function FavoritesPanel() {
         {favorites.map((fav, index) => (
           <div 
             key={index} 
-            className="flex items-center justify-between p-3 border border-border rounded-lg hover-elevate"
+            className="flex items-start gap-3 p-3 border border-border rounded-lg hover-elevate"
             data-testid={`favorite-${index}`}
           >
-            <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-              <div>
-                <div className="font-semibold text-sm">{fav.name}</div>
-                <div className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                  {fav.change < 0 ? (
-                    <TrendingDown className="w-3 h-3 text-green-600" />
-                  ) : (
-                    <TrendingUp className="w-3 h-3 text-red-500" />
-                  )}
-                  <span className={fav.change < 0 ? 'text-green-600' : 'text-red-500'}>
-                    {Math.abs(fav.change)}%
-                  </span>
-                </div>
+            <Star className="w-4 h-4 fill-yellow-500 text-yellow-500 flex-shrink-0 mt-1" />
+            <div className="flex-1 min-w-0">
+              <div className="font-semibold text-sm">{fav.name}</div>
+              <div className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                {fav.change < 0 ? (
+                  <TrendingDown className="w-3 h-3 text-green-600" />
+                ) : (
+                  <TrendingUp className="w-3 h-3 text-red-500" />
+                )}
+                <span className={fav.change < 0 ? 'text-green-600' : 'text-red-500'}>
+                  {Math.abs(fav.change)}%
+                </span>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <div className="text-right">
-                <div className="font-bold">{fav.value}</div>
+                <div className="font-bold text-sm whitespace-nowrap">{fav.value}</div>
               </div>
-              <LineChart width={60} height={30} data={fav.chartData.map(v => ({ value: v }))}>
-                <Line 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke={fav.change < 0 ? '#16a34a' : '#ef4444'} 
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
+              <div className="w-16 h-8">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={fav.chartData.map(v => ({ value: v }))}>
+                    <Line 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke={fav.change < 0 ? '#16a34a' : '#ef4444'} 
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         ))}

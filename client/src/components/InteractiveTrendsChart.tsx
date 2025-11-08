@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,8 +9,8 @@ interface ChartDataPoint {
   date: string;
   greenjeeva?: number;
   marketAvg?: number;
-  competitorA?: number;
-  competitorB?: number;
+  nutrisource?: number;
+  bioherbs?: number;
 }
 
 export default function InteractiveTrendsChart() {
@@ -19,8 +19,8 @@ export default function InteractiveTrendsChart() {
   const [visibleLines, setVisibleLines] = useState({
     greenjeeva: true,
     marketAvg: true,
-    competitorA: true,
-    competitorB: true
+    nutrisource: true,
+    bioherbs: true
   });
 
   const timeRanges = [
@@ -40,20 +40,63 @@ export default function InteractiveTrendsChart() {
     { value: 'amino', label: 'Amino Acids' }
   ];
 
-  const chartData: ChartDataPoint[] = [
-    { date: '10/01', greenjeeva: 125, marketAvg: 135, competitorA: 138, competitorB: 132 },
-    { date: '10/08', greenjeeva: 123, marketAvg: 133, competitorA: 136, competitorB: 130 },
-    { date: '10/15', greenjeeva: 120, marketAvg: 130, competitorA: 133, competitorB: 127 },
-    { date: '10/22', greenjeeva: 122, marketAvg: 128, competitorA: 130, competitorB: 126 },
-    { date: '10/29', greenjeeva: 119, marketAvg: 126, competitorA: 128, competitorB: 124 },
-    { date: '11/05', greenjeeva: 118, marketAvg: 125, competitorA: 127, competitorB: 123 },
-  ];
+  // Generate different data based on time range
+  const chartData: ChartDataPoint[] = useMemo(() => {
+    const dataByRange: Record<string, ChartDataPoint[]> = {
+      '7d': [
+        { date: '11/01', greenjeeva: 122, marketAvg: 128, nutrisource: 130, bioherbs: 126 },
+        { date: '11/02', greenjeeva: 121, marketAvg: 127, nutrisource: 129, bioherbs: 125 },
+        { date: '11/03', greenjeeva: 120, marketAvg: 126, nutrisource: 128, bioherbs: 124 },
+        { date: '11/04', greenjeeva: 119, marketAvg: 126, nutrisource: 128, bioherbs: 124 },
+        { date: '11/05', greenjeeva: 119, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+        { date: '11/06', greenjeeva: 118, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+        { date: '11/07', greenjeeva: 118, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+      ],
+      '30d': [
+        { date: '10/08', greenjeeva: 125, marketAvg: 135, nutrisource: 138, bioherbs: 132 },
+        { date: '10/12', greenjeeva: 124, marketAvg: 134, nutrisource: 137, bioherbs: 131 },
+        { date: '10/15', greenjeeva: 123, marketAvg: 133, nutrisource: 136, bioherbs: 130 },
+        { date: '10/19', greenjeeva: 121, marketAvg: 131, nutrisource: 134, bioherbs: 128 },
+        { date: '10/22', greenjeeva: 120, marketAvg: 130, nutrisource: 133, bioherbs: 127 },
+        { date: '10/26', greenjeeva: 119, marketAvg: 128, nutrisource: 131, bioherbs: 126 },
+        { date: '10/29', greenjeeva: 119, marketAvg: 126, nutrisource: 128, bioherbs: 124 },
+        { date: '11/02', greenjeeva: 118, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+        { date: '11/05', greenjeeva: 118, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+      ],
+      '90d': [
+        { date: '08/15', greenjeeva: 132, marketAvg: 145, nutrisource: 148, bioherbs: 142 },
+        { date: '09/01', greenjeeva: 130, marketAvg: 142, nutrisource: 145, bioherbs: 139 },
+        { date: '09/15', greenjeeva: 128, marketAvg: 139, nutrisource: 142, bioherbs: 136 },
+        { date: '10/01', greenjeeva: 125, marketAvg: 135, nutrisource: 138, bioherbs: 132 },
+        { date: '10/15', greenjeeva: 122, marketAvg: 131, nutrisource: 134, bioherbs: 128 },
+        { date: '11/01', greenjeeva: 119, marketAvg: 127, nutrisource: 129, bioherbs: 125 },
+        { date: '11/07', greenjeeva: 118, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+      ],
+      '6m': [
+        { date: 'Jun', greenjeeva: 145, marketAvg: 158, nutrisource: 162, bioherbs: 155 },
+        { date: 'Jul', greenjeeva: 140, marketAvg: 153, nutrisource: 157, bioherbs: 150 },
+        { date: 'Aug', greenjeeva: 135, marketAvg: 148, nutrisource: 152, bioherbs: 145 },
+        { date: 'Sep', greenjeeva: 128, marketAvg: 140, nutrisource: 144, bioherbs: 137 },
+        { date: 'Oct', greenjeeva: 122, marketAvg: 132, nutrisource: 135, bioherbs: 129 },
+        { date: 'Nov', greenjeeva: 118, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+      ],
+      '1y': [
+        { date: 'Jan', greenjeeva: 165, marketAvg: 178, nutrisource: 182, bioherbs: 175 },
+        { date: 'Mar', greenjeeva: 158, marketAvg: 170, nutrisource: 174, bioherbs: 167 },
+        { date: 'May', greenjeeva: 150, marketAvg: 162, nutrisource: 166, bioherbs: 159 },
+        { date: 'Jul', greenjeeva: 140, marketAvg: 153, nutrisource: 157, bioherbs: 150 },
+        { date: 'Sep', greenjeeva: 128, marketAvg: 140, nutrisource: 144, bioherbs: 137 },
+        { date: 'Nov', greenjeeva: 118, marketAvg: 125, nutrisource: 127, bioherbs: 123 },
+      ]
+    };
+    return dataByRange[timeRange] || dataByRange['30d'];
+  }, [timeRange]);
 
   const stats = [
     { label: 'Greenjeeva', value: 118, change: -5.6, color: 'hsl(var(--primary))' },
     { label: 'Market Avg', value: 125, change: -7.4, color: 'hsl(var(--chart-2))' },
-    { label: 'Competitor A', value: 127, change: -8.0, color: '#94A3B8' },
-    { label: 'Competitor B', value: 123, change: -6.8, color: '#CBD5E1' }
+    { label: 'NutriSource', value: 127, change: -8.0, color: '#94A3B8' },
+    { label: 'BioHerbs', value: 123, change: -6.8, color: '#CBD5E1' }
   ];
 
   const toggleLine = (line: keyof typeof visibleLines) => {
@@ -161,26 +204,26 @@ export default function InteractiveTrendsChart() {
                 name="Market Average"
               />
             )}
-            {visibleLines.competitorA && (
+            {visibleLines.nutrisource && (
               <Line 
                 type="monotone" 
-                dataKey="competitorA" 
+                dataKey="nutrisource" 
                 stroke="#94A3B8" 
                 strokeWidth={1.5}
                 strokeDasharray="5 5"
                 dot={false}
-                name="Competitor A"
+                name="NutriSource"
               />
             )}
-            {visibleLines.competitorB && (
+            {visibleLines.bioherbs && (
               <Line 
                 type="monotone" 
-                dataKey="competitorB" 
+                dataKey="bioherbs" 
                 stroke="#CBD5E1" 
                 strokeWidth={1.5}
                 strokeDasharray="3 3"
                 dot={false}
-                name="Competitor B"
+                name="BioHerbs"
               />
             )}
           </LineChart>
